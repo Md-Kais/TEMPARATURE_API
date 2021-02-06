@@ -58,7 +58,7 @@
     function stickUp() {
 
         const id = document.getElementById('wishDeath').value;
-        console.log(id);
+       
         fetch("https://api.openweathermap.org/data/2.5/weather?q=" + id + "&appid=f171f46910893f45f2d571d5a7146ab3")
             .then(res => res.json())
             .then(data => weather(data))
@@ -68,7 +68,11 @@
 
         }
         function weather(data) {
+            //data shows up in console log for debugging
             console.log(data);
+             if (data.cod == "404") {
+                alert('error and wrong city  name');
+            }
             const temp = data.main;
             const feels_like = temp.feels_like;
             const temp_min = temp.temp_min;
@@ -91,7 +95,7 @@
             //  icon='03d';
 
 
-            console.log(imgsrc);
+            //console.log(imgsrc);
         }
 
 
