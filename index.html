@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="wishDeath" class="form-control" onkeypress="enter(event)"
+                    placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search-btn" type="button" class="btn btn-danger" onclick="stickUp()">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <div class="text-center" id="weather-stats">
+            </div>
+            <!-- <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="">-->
+            <h1 id="name">Dhaka</h1>
+            <h3><span id="feelsLike">38.06</span>&deg;C</h3>
+            <h3><span id="tempMin">30</span>&deg;C<=<span id="tempMax">40</span>&deg;C
+            </h3>
+
+            <h1 class="lead" id="weatherMain">Clouds</h1>
+
+        </div>
+    </div>
+
+</body>
+<script>
+
+    function enter(event) {
+        if (event.keyCode === 13) {
+
+            event.preventDefault();
+            document.getElementById("search-btn").click();
+
+        }
+    }
+
+    function stickUp() {
+
+        const id = document.getElementById('wishDeath').value;
+        console.log(id);
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=" + id + "&appid=f171f46910893f45f2d571d5a7146ab3")
+            .then(res => res.json())
+            .then(data => weather(data))
+        function innerChange(id, val) {
+            // console.log(document.getElementById(id).innerText);
+            document.getElementById(id).innerText = val;
+
+        }
+        function weather(data) {
+            console.log(data);
+            const temp = data.main;
+            const feels_like = temp.feels_like;
+            const temp_min = temp.temp_min;
+            const temp_max = temp.temp_max;
+            const name = data.name;
+            //console.log(name);
+            const weather = data.weather[0];
+            const weatherMain = weather.main;
+            let icon = weather.icon;
+            //console.log(feels_like);
+            const imgsrc = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+            const image = document.createElement('img');
+            image.src = imgsrc;
+            document.getElementById('weather-stats').appendChild(image);
+            innerChange('feelsLike', (feels_like - 273.15).toFixed(2));
+            innerChange('tempMin', Math.min((feels_like - 273.15).toFixed(2)), (temp_min - 273.15).toFixed(2));
+            innerChange('tempMax', (temp_max - 273.15).toFixed(2));
+            innerChange('name', name);
+            innerChange('weatherMain', weatherMain);
+            //  icon='03d';
+
+
+            console.log(imgsrc);
+        }
+
+
+
+    }
+</script>
+
+</html>
