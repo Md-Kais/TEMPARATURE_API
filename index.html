@@ -32,7 +32,7 @@
         <div class="weather-status text-white text-center">
             <div class="text-center" id="weather-stats">
             </div>
-            <!-- <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="">-->
+           <img id="fuck" src=" "https://openweathermap.org/img/wn/"02d"@2x.png";" >
             <h1 id="name">Dhaka</h1>
             <h3><span id="feelsLike">38.06</span>&deg;C</h3>
             <h3><span id="tempMin">30</span>&deg;C<=<span id="tempMax">40</span>&deg;C
@@ -84,9 +84,12 @@
             let icon = weather.icon;
             //console.log(feels_like);
             const imgsrc = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-            const image = document.createElement('img');
-            image.src = imgsrc;
-            document.getElementById('weather-stats').appendChild(image);
+            const image=document.getElementById('fuck');
+            image.src=imgsrc;
+
+            // const image = document.createElement('img');
+            // image.src = imgsrc;
+            // document.getElementById('weather-stats').appendChild(image);
             innerChange('feelsLike', (feels_like - 273.15).toFixed(2));
             innerChange('tempMin', Math.min((feels_like - 273.15).toFixed(2)), (temp_min - 273.15).toFixed(2));
             innerChange('tempMax', (temp_max - 273.15).toFixed(2));
